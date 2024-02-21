@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    public AudioArrayScriptableObject audioArray;
 
     public void PlaySound()
     {
