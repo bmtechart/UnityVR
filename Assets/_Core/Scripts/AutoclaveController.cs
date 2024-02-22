@@ -4,17 +4,13 @@ using Unity.VRTemplate;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum DoorState
-{
-    CLOSED,
-    OPEN
-}
-
 public class AutoclaveController : MonoBehaviour
 {
 
     [Header("Door")]
     public GameObject Door;
+
+    private HingeJoint _doorHinge;
 
     public UnityEvent OnDoorOpen;
     public UnityEvent OnDoorClosed;
@@ -30,12 +26,14 @@ public class AutoclaveController : MonoBehaviour
     void Start()
     {
         _doorState = DoorState.CLOSED;
+        _doorHinge = Door.GetComponent<HingeJoint>();
     }
 
 
     // Update is called once per frame
     void Update()
     {
+
         
     }
 }

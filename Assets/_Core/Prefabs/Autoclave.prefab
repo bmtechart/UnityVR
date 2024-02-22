@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448b24d83033d4a4f8c9120bb1e28ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Door: {fileID: 0}
+  Door: {fileID: 3694662228003406901}
   OnDoorOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -308,6 +308,7 @@ GameObject:
   - component: {fileID: 6380046978753041412}
   - component: {fileID: 4874284173853054734}
   - component: {fileID: 3606854724213561119}
+  - component: {fileID: 4359835532086889378}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -437,7 +438,7 @@ HingeJoint:
   m_UseAcceleration: 0
   m_Limits:
     min: -152.07434
-    max: -60.666145
+    max: -55
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -447,6 +448,18 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &4359835532086889378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694662228003406901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30e0697cff7e394c967ca5bb313798d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4044181778565810760
 GameObject:
   m_ObjectHideFlags: 0
