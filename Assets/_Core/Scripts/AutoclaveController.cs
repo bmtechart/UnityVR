@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class AutoclaveController : MonoBehaviour
 {
-    [SerializeField] public AutoclaveStats autoclaveStats; //the current autoclave settings and variables
-    [SerializeField] public AutoclaveRequirements autoclaveRequirements; //the settings required for a successful sterilization
-    [SerializeField] public AutoclaveLimits autoclaveLimits; //the physical minimum and maximum settings on the autoclave
+    [SerializeField] public AutoclaveStats AutoclaveStatsObject; //the current autoclave settings and variables
+    [SerializeField] public AutoclaveRequirements AutoclaveRequirementsObject; //the settings required for a successful sterilization
+    [SerializeField] public AutoclaveLimits AutoclaveLimitsObject; //the physical minimum and maximum settings on the autoclave
 
-    [SerializeField] public XRKnob timerDial;
-    [SerializeField] public XRKnob tempDial;
-    //add water level
-    [SerializeField] public XRKnob modeDial;
-    //add power switch
-    //add water cap
-    //add door
-    //add door handle
+    [SerializeField] public XRKnob TimerDial;
+    [SerializeField] public XRKnob TempDial;
+    //TODO: add water level
+    [SerializeField] public XRKnob ModeDial;
+    //TODO: add power switch
+    //TODO: add water cap
+    //TODO: add door
+    //TODO: add door handle
 
     [SerializeField] public GameObject pressureGauge;
 
@@ -26,20 +26,20 @@ public class AutoclaveController : MonoBehaviour
     public void ResetAutoclave()
     {
         //reset settings and variables to zero/default
-        autoclaveStats.Timer = autoclaveLimits.minTime;
-        autoclaveStats.Temp = autoclaveLimits.minTemp;
-        autoclaveStats.WaterLevel = autoclaveLimits.minWaterLevel;
-        autoclaveStats.Mode = AutoclaveMode.Mode1;
-        autoclaveStats.IsPowerOn = false;
-        autoclaveStats.IsWaterCapOpen = false;
-        autoclaveStats.IsDoorOpen = false;
-        autoclaveStats.IsDoorHandleOpen = false;
+        AutoclaveStatsObject.Timer = AutoclaveLimitsObject.MinTime;
+        AutoclaveStatsObject.Temp = AutoclaveLimitsObject.MinTemp;
+        AutoclaveStatsObject.WaterLevel = AutoclaveLimitsObject.MinWaterLevel;
+        AutoclaveStatsObject.Mode = AutoclaveMode.Mode1;
+        AutoclaveStatsObject.IsPowerOn = false;
+        AutoclaveStatsObject.IsWaterCapOpen = false;
+        AutoclaveStatsObject.IsDoorOpen = false;
+        AutoclaveStatsObject.IsDoorHandleOpen = false;
 
         //reset dials/switches
-        timerDial.value = 0.0f;
-        tempDial.value = 0.0f;
+        TimerDial.value = 0.0f;
+        TempDial.value = 0.0f;
         //TODO: reset water level
-        modeDial.value = 0.0f;
+        ModeDial.value = 0.0f;
         //TODO: reset power switch
         //TODO: reset water cap
         //TODO: reset door
@@ -48,14 +48,14 @@ public class AutoclaveController : MonoBehaviour
 
     public void AddWater(float ml)
     {
-        autoclaveStats.WaterLevel += ml;
+        AutoclaveStatsObject.WaterLevel += ml;
 
         UpdateVisibleWaterLevel();
     }
 
     public void RemoveWater(float ml)
     {
-        autoclaveStats.WaterLevel -= ml;
+        AutoclaveStatsObject.WaterLevel -= ml;
 
         UpdateVisibleWaterLevel();
     }
@@ -67,42 +67,42 @@ public class AutoclaveController : MonoBehaviour
 
     public void OnTimerDialChange()
     {
-        autoclaveStats.Timer = Mathf.Lerp(autoclaveLimits.minTime, autoclaveLimits.maxTime, timerDial.value);
+        AutoclaveStatsObject.Timer = Mathf.Lerp(AutoclaveLimitsObject.MinTime, AutoclaveLimitsObject.MaxTime, TimerDial.value);
     }
 
     public void OnTempDialChange()
     {
-        autoclaveStats.Temp = Mathf.Lerp(autoclaveLimits.minTemp, autoclaveLimits.maxTemp, tempDial.value);
+        AutoclaveStatsObject.Temp = Mathf.Lerp(AutoclaveLimitsObject.MinTemp, AutoclaveLimitsObject.MaxTemp, TempDial.value);
     }
 
     public void OnModeDialChange()
     {
-        int mode = Mathf.RoundToInt(modeDial.value * 4.0f);
+        int mode = Mathf.RoundToInt(ModeDial.value * 4.0f);
         switch (mode)
         {
             case 1: //right
-                autoclaveStats.Mode = AutoclaveMode.FillWater;
+                AutoclaveStatsObject.Mode = AutoclaveMode.FillWater;
                 break;
 
             case 2: //down
-                autoclaveStats.Mode = AutoclaveMode.Sterilize;
+                AutoclaveStatsObject.Mode = AutoclaveMode.Sterilize;
                 break;
 
             case 3: //left
-                autoclaveStats.Mode = AutoclaveMode.ExhaustDry;
+                AutoclaveStatsObject.Mode = AutoclaveMode.ExhaustDry;
                 break;
 
             case 4: //up
             case 0: //up
             default:
-                autoclaveStats.Mode = AutoclaveMode.Mode1;
+                AutoclaveStatsObject.Mode = AutoclaveMode.Mode1;
                 break;
         }
     }
 
     public void OnRun()
     {
-        switch (autoclaveStats.Mode)
+        switch (AutoclaveStatsObject.Mode)
         {
             case AutoclaveMode.Mode1:
                 //events if turned on while in mode 1
@@ -132,5 +132,20 @@ public class AutoclaveController : MonoBehaviour
         
         //rotate pressure guage
 
+    }
+
+    public bool IsTimerCorrect()
+    {
+        return AutoclaveStatsObject.Timer >= AutoclaveRequirementsObject.MinTime && AutoclaveStatsObject.Timer <= AutoclaveRequirementsObject.MaxTime;
+    }
+
+    public bool IsTempCorrect()
+    {
+        return AutoclaveStatsObject.Temp >= AutoclaveRequirementsObject.MinTemp && AutoclaveStatsObject.Temp <= AutoclaveRequirementsObject.MaxTemp;
+    }
+
+    public bool IsWaterLevelCorrect()
+    {
+        return AutoclaveStatsObject.WaterLevel >= AutoclaveRequirementsObject.MinWaterLevel && AutoclaveStatsObject.WaterLevel <= AutoclaveRequirementsObject.MaxWaterLevel;
     }
 }
