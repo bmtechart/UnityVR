@@ -69,11 +69,6 @@ public class AutoclaveController : MonoBehaviour
         _doorHinge = Door.GetComponent<HingeJoint>();
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-
     public void OnTimerDialChange()
     {
         AutoclaveStatsObject.Timer = Mathf.Lerp(AutoclaveLimitsObject.MinTime, AutoclaveLimitsObject.MaxTime, TimerDial.value);
