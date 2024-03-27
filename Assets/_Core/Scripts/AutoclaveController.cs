@@ -65,21 +65,8 @@ public class AutoclaveController : MonoBehaviour
 
     public void AddWater(float ml)
     {
-        AutoclaveStatsObject.WaterLevel += ml;
-
-        UpdateVisibleWaterLevel();
-    }
-
-    public void RemoveWater(float ml)
-    {
-        AutoclaveStatsObject.WaterLevel -= ml;
-
-        UpdateVisibleWaterLevel();
-    }
-
-    private void UpdateVisibleWaterLevel()
-    {
-        //TODO: change visible water level based on autoclaveStats.WaterLevel
+        _doorState = DoorState.CLOSED;
+        _doorHinge = Door.GetComponent<HingeJoint>();
     }
 
     public void OnTimerDialChange()
@@ -152,20 +139,5 @@ public class AutoclaveController : MonoBehaviour
     private void Sterilize()
     {
         //TODO: check against requirements and do something
-    }
-
-    public bool IsTimerCorrect()
-    {
-        return AutoclaveStatsObject.Timer >= AutoclaveRequirementsObject.MinTime && AutoclaveStatsObject.Timer <= AutoclaveRequirementsObject.MaxTime;
-    }
-
-    public bool IsTempCorrect()
-    {
-        return AutoclaveStatsObject.Temp >= AutoclaveRequirementsObject.MinTemp && AutoclaveStatsObject.Temp <= AutoclaveRequirementsObject.MaxTemp;
-    }
-
-    public bool IsWaterLevelCorrect()
-    {
-        return AutoclaveStatsObject.WaterLevel >= AutoclaveRequirementsObject.MinWaterLevel && AutoclaveStatsObject.WaterLevel <= AutoclaveRequirementsObject.MaxWaterLevel;
     }
 }
