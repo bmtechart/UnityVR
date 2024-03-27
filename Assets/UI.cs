@@ -5,27 +5,41 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
+
+    public GameObject fadeEffect;
+
+
     public void Startlevel()
     {
-        SceneManager.LoadScene(1);
+        fadeEffect.SetActive(true);
+
+        this.Wait(2f, () => { SceneManager.LoadScene(1); });
     }
 
-
+    
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        fadeEffect.SetActive(true);
+
+        this.Wait(2f, () => { SceneManager.LoadScene(0); });
     }
 
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene(Application.loadedLevel);
+        fadeEffect.SetActive(true);
+
+        this.Wait(2f, () => { SceneManager.LoadScene(Application.loadedLevel); });
     }
 
 
     public void QuitGame()
     {
-        Application.Quit();
+        fadeEffect.SetActive(true);
+
+        this.Wait(2f, () => { Application.Quit(); });
+
+        
     }
 
 
