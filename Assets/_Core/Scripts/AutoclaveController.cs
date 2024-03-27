@@ -1,25 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VRTemplate;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AutoclaveController : MonoBehaviour
 {
+    [Header("Scriptable Objects")]
     [SerializeField] public AutoclaveStats AutoclaveStatsObject; //the current autoclave settings and variables
     [SerializeField] public AutoclaveRequirements AutoclaveRequirementsObject; //the settings required for a successful sterilization
     [SerializeField] public AutoclaveLimits AutoclaveLimitsObject; //the physical minimum and maximum settings on the autoclave
 
-    [SerializeField] public XRKnob TimerDial;
-    [SerializeField] public XRKnob TempDial;
-    //TODO: add water level
-    [SerializeField] public XRKnob ModeDial;
-    //TODO: add power switch
-    //TODO: add water cap
-    //TODO: add door
-    [SerializeField] public XRKnob DoorHandle;
+    [Header("Door")]
+    public GameObject Door;
 
-    [SerializeField] public GameObject pressureGauge;
+    private HingeJoint _doorHinge;
+
+    public UnityEvent OnDoorOpen;
+    public UnityEvent OnDoorClosed;
+    private DoorState _doorState;
+
+    [Header("Timer")]
+    [SerializeField] public XRKnob TimerDial;
+
+    [Header("Temperature")]
+    [SerializeField] public XRKnob TempDial;
+
+    [Header("Mode")]
+    [SerializeField] public XRKnob ModeDial;
+
+    //TODO: add power switch
+    //TODO: add water level
+    //TODO: add water cap
+
+    public DoorState DoorState { get { return _doorState; } }
 
     private void Start()
     {
+        _doorHinge = Door.GetComponent<HingeJoint>();
+
         ResetAutoclave();
     }
 
@@ -32,8 +51,7 @@ public class AutoclaveController : MonoBehaviour
         AutoclaveStatsObject.Mode = AutoclaveMode.Mode1;
         AutoclaveStatsObject.IsPowerOn = false;
         AutoclaveStatsObject.IsWaterCapOpen = false;
-        AutoclaveStatsObject.IsDoorOpen = false;
-        AutoclaveStatsObject.IsDoorHandleOpen = false;
+        _doorState = DoorState.CLOSED;
 
         //reset dials/switches
         TimerDial.value = 0.0f;
@@ -43,7 +61,6 @@ public class AutoclaveController : MonoBehaviour
         //TODO: reset power switch
         //TODO: reset water cap
         //TODO: reset door
-        DoorHandle.value = 0.0f;
     }
 
     public void AddWater(float ml)
@@ -134,10 +151,7 @@ public class AutoclaveController : MonoBehaviour
 
     private void Sterilize()
     {
-        //check against requirements
-        
-        //rotate pressure guage
-
+        //TODO: check against requirements and do something
     }
 
     public bool IsTimerCorrect()
