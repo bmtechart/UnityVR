@@ -9,6 +9,7 @@ public enum AutoclaveMode
 }
 
 //these are the current settings and variables of the autoclave
+[CreateAssetMenu(fileName = "AutoclaveStatsObject", menuName = "ScriptableObjects/AutoclaveStats", order = 0)]
 public class AutoclaveStats : ScriptableObject
 {
     [SerializeField] public float Timer; //seconds

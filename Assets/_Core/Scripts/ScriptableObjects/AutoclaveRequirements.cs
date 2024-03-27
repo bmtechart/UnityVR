@@ -1,6 +1,7 @@
 using UnityEngine;
 
 //these are the settings required for a successful sterilization
+[CreateAssetMenu(fileName = "AutoclaveRequirementsObject", menuName = "ScriptableObjects/AutoclaveRequirements", order = 0)]
 public class AutoclaveRequirements : ScriptableObject
 {
     [SerializeField] public float MinTime; //seconds
