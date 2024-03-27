@@ -1,6 +1,7 @@
 using UnityEngine;
 
 //these are the minimum and maximum settings possible on the autoclave
+[CreateAssetMenu(fileName = "AutoclaveLimitsObject", menuName = "ScriptableObjects/AutoclaveLimits", order = 0)]
 public class AutoclaveLimits : ScriptableObject
 {
     [SerializeField] public float MinTime; //seconds

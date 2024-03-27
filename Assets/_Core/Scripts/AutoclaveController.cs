@@ -14,7 +14,7 @@ public class AutoclaveController : MonoBehaviour
     //TODO: add power switch
     //TODO: add water cap
     //TODO: add door
-    //TODO: add door handle
+    [SerializeField] public XRKnob DoorHandle;
 
     [SerializeField] public GameObject pressureGauge;
 
@@ -43,7 +43,7 @@ public class AutoclaveController : MonoBehaviour
         //TODO: reset power switch
         //TODO: reset water cap
         //TODO: reset door
-        //TODO: reset door handle
+        DoorHandle.value = 0.0f;
     }
 
     public void AddWater(float ml)
@@ -68,11 +68,13 @@ public class AutoclaveController : MonoBehaviour
     public void OnTimerDialChange()
     {
         AutoclaveStatsObject.Timer = Mathf.Lerp(AutoclaveLimitsObject.MinTime, AutoclaveLimitsObject.MaxTime, TimerDial.value);
+        Debug.Log(AutoclaveStatsObject.Timer);
     }
 
     public void OnTempDialChange()
     {
         AutoclaveStatsObject.Temp = Mathf.Lerp(AutoclaveLimitsObject.MinTemp, AutoclaveLimitsObject.MaxTemp, TempDial.value);
+        Debug.Log(AutoclaveStatsObject.Temp);
     }
 
     public void OnModeDialChange()
@@ -82,20 +84,24 @@ public class AutoclaveController : MonoBehaviour
         {
             case 1: //right
                 AutoclaveStatsObject.Mode = AutoclaveMode.FillWater;
+                Debug.Log(AutoclaveStatsObject.Mode);
                 break;
 
             case 2: //down
                 AutoclaveStatsObject.Mode = AutoclaveMode.Sterilize;
+                Debug.Log(AutoclaveStatsObject.Mode);
                 break;
 
             case 3: //left
                 AutoclaveStatsObject.Mode = AutoclaveMode.ExhaustDry;
+                Debug.Log(AutoclaveStatsObject.Mode);
                 break;
 
             case 4: //up
             case 0: //up
             default:
                 AutoclaveStatsObject.Mode = AutoclaveMode.Mode1;
+                Debug.Log(AutoclaveStatsObject.Mode);
                 break;
         }
     }
